@@ -1,19 +1,22 @@
 <script>
-  import { theme } from "../app/themeStore";
-
-  function toggleTheme() {
-    const newTheme = $theme === "theme-dark" ? "theme-light" : "theme-dark";
-    $theme = newTheme;
-
-    if (newTheme === "theme-dark") {
-      document.getElementById("theme-dark-stylesheet").media = "all";
-      document.getElementById("theme-light-stylesheet").media = "none";
-    } else {
-      document.getElementById("theme-light-stylesheet").media = "all";
-      document.getElementById("theme-dark-stylesheet").media = "none";
+    import { theme } from "../app/themeStore";
+  
+    function toggleTheme() {
+      const newTheme = $theme === "theme-dark" ? "theme-light" : "theme-dark";
+      $theme = newTheme;
+  
+      const lightStylesheet = document.getElementById("theme-light-stylesheet");
+      const darkStylesheet = document.getElementById("theme-dark-stylesheet");
+  
+      if (newTheme === "theme-dark") {
+        if (darkStylesheet && 'media' in darkStylesheet) darkStylesheet.media = "all";
+        if (lightStylesheet && 'media' in lightStylesheet) lightStylesheet.media = "none";
+      } else {
+        if (lightStylesheet && 'media' in lightStylesheet) lightStylesheet.media = "all";
+        if (darkStylesheet && 'media' in darkStylesheet) darkStylesheet.media = "none";
+      }
     }
-  }
-</script>
+  </script>
 
 <nav>
   <button on:click={toggleTheme}>Toggle</button>
