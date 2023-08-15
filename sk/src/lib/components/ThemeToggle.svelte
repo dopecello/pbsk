@@ -1,6 +1,9 @@
 <script>
+    import { onMount, afterUpdate } from "svelte";
     import { theme } from "../app/themeStore";
   
+    /* global feather */
+
     function toggleTheme() {
       const newTheme = $theme === "theme-dark" ? "theme-light" : "theme-dark";
       $theme = newTheme;
@@ -9,26 +12,28 @@
       const darkStylesheet = document.getElementById("theme-dark-stylesheet");
   
       if (newTheme === "theme-dark") {
-        if (darkStylesheet && 'media' in darkStylesheet) darkStylesheet.media = "all";
-        if (lightStylesheet && 'media' in lightStylesheet) lightStylesheet.media = "none";
+        if (darkStylesheet && "media" in darkStylesheet)
+          darkStylesheet.media = "all";
+        if (lightStylesheet && "media" in lightStylesheet)
+          lightStylesheet.media = "none";
       } else {
-        if (lightStylesheet && 'media' in lightStylesheet) lightStylesheet.media = "all";
-        if (darkStylesheet && 'media' in darkStylesheet) darkStylesheet.media = "none";
+        if (lightStylesheet && "media" in lightStylesheet)
+          lightStylesheet.media = "all";
+        if (darkStylesheet && "media" in darkStylesheet)
+          darkStylesheet.media = "none";
       }
     }
+  
+    onMount(() => {
+      feather.replace();
+    });
+  
+    afterUpdate(() => {
+      feather.replace();
+    });
   </script>
+  
 
 <nav>
-  <button on:click={toggleTheme}>Toggle</button>
+  <button on:click={toggleTheme}><i data-feather="sun" /></button>
 </nav>
-
-<style lang="scss">
-  nav {
-    button {
-      padding: 0.5em 1em;
-      margin: 0;
-      background: var(--background-alt);
-      border-bottom: solid var(--background);
-    }
-  }
-</style>
